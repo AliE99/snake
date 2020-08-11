@@ -19,15 +19,13 @@ snake[0] = {
 
 // Crating the food
 let foodPlace = {
-        x : Math.floor(Math.random() * 17 + 1) * box,
-        y : Math.floor(Math.random() * 15 + 3) * box,
-}
+    x: Math.floor(Math.random() * 17 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 3) * box,
+};
 
-
+let score = 0;
 function draw() {
-
     ctx.drawImage(field, 0, 0);
-    ctx.drawImage(food,foodPlace.x , foodPlace.y);
 
     for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = i == 0 ? "green" : "white";
@@ -37,23 +35,53 @@ function draw() {
         ctx.strokeRect(snake[i].x, snake[i].y, box, box);
     }
 
+    ctx.drawImage(food, foodPlace.x, foodPlace.y);
+
+    // old head
+    let headx = snake[0].x;
+    let heady = snake[0].y;
     // move the snake
     if (d == "LEFT") {
-        move(d);
+        headx -= box;
     }
     if (d == "RIGHT") {
-        move(d);
+        headx += box;
     }
     if (d == "UP") {
-        move(d);
+        heady -= box;
     }
     if (d == "DOWN") {
-        move(d);
+        heady += box;
     }
+
+    // snake eat the food
+    if (headx == foodPlace.x && heady == foodPlace.y) {
+        foodPlace = {
+            x: Math.floor(Math.random() * 17 + 1) * box,
+            y: Math.floor(Math.random() * 15 + 3) * box,
+        };
+        score++;
+    } else {
+        snake.pop();
+    }
+
+    let newHead = {
+        x: headx,
+        y: heady,
+    };
+
+    
+
+    snake.unshift(newHead);
+
     checkGameover();
+
+    ctx.fillStyle = "white";
+    ctx.font = "45px Changa one";
+    ctx.fillText(score, 2 * box, 1.6 * box);
+
+    
 }
-
-
 
 // *************************************************************
 let d = "LEFT";
@@ -79,49 +107,6 @@ function direction(event) {
 }
 
 // *************************************************************
-function move(d) {
-    // move the snake
-    if (d == "LEFT") {
-        let head = snake[0];
-        let newHead = {
-            x: head.x - box,
-            y: head.y,
-        };
-        snake.unshift(newHead);
-        snake.pop();
-    }
-    if (d == "RIGHT") {
-        let head = snake[0];
-        let newHead = {
-            x: head.x + box,
-            y: head.y,
-        };
-        snake.unshift(newHead);
-        snake.pop();
-    }
-    // move the snake
-    if (d == "UP") {
-        let head = snake[0];
-        let newHead = {
-            x: head.x,
-            y: head.y - box,
-        };
-        snake.unshift(newHead);
-        snake.pop();
-    }
-    // move the snake
-    if (d == "DOWN") {
-        let head = snake[0];
-        let newHead = {
-            x: head.x,
-            y: head.y + box,
-        };
-        snake.unshift(newHead);
-        snake.pop();
-    }
-}
-
-// *************************************************************
 function checkGameover() {
     let head = snake[0];
     if (
@@ -133,4 +118,4 @@ function checkGameover() {
         clearInterval(game);
     }
 }
-let game = setInterval(draw, 1100);
+let game = setInterval(draw, 100);
