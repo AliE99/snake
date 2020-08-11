@@ -17,9 +17,17 @@ snake[0] = {
     y: 10 * box,
 };
 
+// Crating the food
+let foodPlace = {
+        x : Math.floor(Math.random() * 17 + 1) * box,
+        y : Math.floor(Math.random() * 15 + 3) * box,
+}
+
+
 function draw() {
+
     ctx.drawImage(field, 0, 0);
-    // placeTheFood()
+    ctx.drawImage(food,foodPlace.x , foodPlace.y);
 
     for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = i == 0 ? "green" : "white";
@@ -45,12 +53,7 @@ function draw() {
     checkGameover();
 }
 
-// *************************************************************
-function placeTheFood() {
-    x = Math.floor(Math.random() * 17 + 1) * box;
-    y = Math.floor(Math.random() * 15 + 3) * box;
-    ctx.drawImage(food, x, y);
-}
+
 
 // *************************************************************
 let d = "LEFT";
@@ -130,4 +133,4 @@ function checkGameover() {
         clearInterval(game);
     }
 }
-let game = setInterval(draw, 100);
+let game = setInterval(draw, 1100);
