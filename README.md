@@ -1,3 +1,3 @@
 # Snake Game
 
-![Image of snake](https://ibb.co/zbT3D5s)
+![Image of snake](https://github.com/AliE99/snake/blob/master/img/snake.png)
