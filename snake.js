@@ -70,8 +70,6 @@ function draw() {
         y: heady,
     };
 
-    
-
     snake.unshift(newHead);
 
     checkGameover();
@@ -79,12 +77,10 @@ function draw() {
     ctx.fillStyle = "white";
     ctx.font = "45px Changa one";
     ctx.fillText(score, 2 * box, 1.6 * box);
-
-    
 }
 
-// *************************************************************
-let d = "LEFT";
+// ---------------------------------------------------------------------------
+let d = "RIGHT";
 document.addEventListener("keydown", direction);
 
 function direction(event) {
@@ -106,16 +102,30 @@ function direction(event) {
     }
 }
 
-// *************************************************************
+// ---------------------------------------------------------------------------
 function checkGameover() {
     let head = snake[0];
     if (
         head.x < box ||
         head.x > 17 * box ||
         head.y < 3 * box ||
-        head.y > 17 * box
+        head.y > 17 * box ||
+        collison()
     ) {
         clearInterval(game);
     }
 }
+
+// ---------------------------------------------------------------------------
+function collison() {
+    let headx = snake[0].x;
+    let heady = snake[0].y;
+    for (let i = 1; i < snake.length; i++) {
+        if(headx == snake[i].x && heady == snake[i].y){
+            return true;
+        }
+    }
+    return false;
+}
+
 let game = setInterval(draw, 100);
