@@ -23,15 +23,26 @@ let foodPlace = {
     y: Math.floor(Math.random() * 15 + 3) * box,
 };
 
+window.onload = function () {
+    ctx.drawImage(field, 0, 0);
+    ctx.fillStyle = "white";
+    ctx.font = "45px Changa one";
+    ctx.fillText(score, 2 * box, 1.6 * box);
+    ctx.fillStyle = "white";
+    ctx.font = "45px Changa one";
+    ctx.fillStyle = "white";
+    ctx.font = "45px Changa one";
+    ctx.fillText("Snake", 7.5 * box, 1.6 * box);
+};
 let score = 0;
 function draw() {
     ctx.drawImage(field, 0, 0);
 
     for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i == 0 ? "green" : "white";
+        ctx.fillStyle = i == 0 ? "red" : "#00810E";
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
 
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "yellow";
         ctx.strokeRect(snake[i].x, snake[i].y, box, box);
     }
 
@@ -77,6 +88,9 @@ function draw() {
     ctx.fillStyle = "white";
     ctx.font = "45px Changa one";
     ctx.fillText(score, 2 * box, 1.6 * box);
+    ctx.fillStyle = "white";
+    ctx.font = "45px Changa one";
+    ctx.fillText("Snake", 7.5 * box, 1.6 * box);
 }
 
 // ---------------------------------------------------------------------------
@@ -121,11 +135,16 @@ function collison() {
     let headx = snake[0].x;
     let heady = snake[0].y;
     for (let i = 1; i < snake.length; i++) {
-        if(headx == snake[i].x && heady == snake[i].y){
+        if (headx == snake[i].x && heady == snake[i].y) {
             return true;
         }
     }
     return false;
 }
-
-let game = setInterval(draw, 100);
+var game;
+let start = document.getElementById("startbtn");
+start.addEventListener("click", () => {
+    let range = document.getElementById("customRange1");
+    game = setInterval(draw, 200 - range.value);
+    
+});

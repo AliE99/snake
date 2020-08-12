@@ -2,6 +2,10 @@
 <html lang="en">
     <head>
         <title>Snake</title>
+        <link
+            rel="stylesheet"
+            href="https://bootswatch.com/4/darkly/bootstrap.min.css"
+        />
         <style>
             canvas {
                 display: block;
@@ -10,7 +14,28 @@
         </style>
     </head>
     <body>
-        <canvas id="snake" width="608" height="608"> </canvas>
-        <script src="snake.js"></script>
+        <div class="container">
+            <div class="row">
+                <div class="col col-lg-2">
+                    <fieldset class="form-group">
+                        <legend></legend>
+                        <label for="customRange1">Select the difficulty</label>
+                        <input
+                            type="range"
+                            class="form-control-range"
+                            id="customRange1"
+                        />
+                    </fieldset>
+                    <button type="submit" class="btn btn-success" id="startbtn">
+                        START
+                    </button>
+                    <button onClick="window.location.reload();" class="btn btn-danger">try again</button>
+                </div>
+                <div class="col">
+                    <canvas id="snake" width="608" height="608"> Snake Game</canvas>
+                    <script src="snake.js"></script>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
