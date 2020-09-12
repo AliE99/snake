@@ -12,6 +12,8 @@ food.src = "img/food.png";
 // Creating the snake
 let snake = [];
 
+let highScore = [];
+
 snake[0] = {
     x: 9 * box,
     y: 10 * box,
@@ -127,6 +129,10 @@ function checkGameover() {
         collison()
     ) {
         clearInterval(game);
+        saveHighScore();
+        ctx.font = "30px sans-serif";
+        ctx.fillStyle = "red";
+        ctx.fillText("GAME OVER", 6.5 * box, 10 * box);
     }
 }
 
@@ -146,5 +152,25 @@ let start = document.getElementById("startbtn");
 start.addEventListener("click", () => {
     let range = document.getElementById("customRange1");
     game = setInterval(draw, 200 - range.value);
-    
 });
+
+function saveHighScore() {
+    let name = document.getElementById("name-input").value;
+    localStorage.setItem(name, score.toString());
+
+    let list = document.getElementById("score-list");
+
+    let counter = 0;
+
+    for (var key in localStorage) {
+        if (counter >= 5) {
+            break;
+        }
+        if (key != "") {
+            let li = document.createElement("li");
+            li.innerHTML = `<p>${key} : ${localStorage[key]}</p>`;
+            list.appendChild(li);
+            counter++;
+        }
+    }
+}

@@ -19,6 +19,8 @@
                 <div class="col col-lg-2 mt-5">
                     <fieldset class="form-group">
                         <legend></legend>
+                        <input id="name-input" type="text" placeholder="Enter Your Name ...">
+                        <hr>   
                         <label for="customRange1">Select the difficulty</label>
                         <input
                             type="range"
@@ -30,6 +32,10 @@
                         START
                     </button>
                     <button onClick="window.location.reload();" class="btn btn-danger">try again</button>
+                    <hr>
+                    <p>High Scores : </p>
+                    <ol id="score-list">
+                    </ol>
                 </div>
                 <div class="col mt-5">
                     <canvas id="snake" width="608" height="608" > Snake Game</canvas>
