@@ -2,6 +2,7 @@ const canv = document.getElementById("snake");
 const ctx = canv.getContext("2d");
 
 const box = 32;
+
 // get the images
 const field = new Image();
 field.src = "img/field.png";
@@ -12,7 +13,6 @@ food.src = "img/food.png";
 // Creating the snake
 let snake = [];
 
-let highScore = [];
 
 snake[0] = {
     x: 9 * box,
@@ -25,6 +25,7 @@ let foodPlace = {
     y: Math.floor(Math.random() * 15 + 3) * box,
 };
 
+// Draw the Game Field
 window.onload = function () {
     ctx.drawImage(field, 0, 0);
     ctx.fillStyle = "white";
@@ -41,10 +42,10 @@ function draw() {
     ctx.drawImage(field, 0, 0);
 
     for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i == 0 ? "red" : "#00810E";
+        ctx.fillStyle = i === 0 ? "#6E6658" : "#A4B3B6";
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
 
-        ctx.strokeStyle = "yellow";
+        ctx.strokeStyle = "FBEEC1";
         ctx.strokeRect(snake[i].x, snake[i].y, box, box);
     }
 
@@ -53,22 +54,24 @@ function draw() {
     // old head
     let headx = snake[0].x;
     let heady = snake[0].y;
+
+
     // move the snake
-    if (d == "LEFT") {
+    if (d === "LEFT") {
         headx -= box;
     }
-    if (d == "RIGHT") {
+    if (d === "RIGHT") {
         headx += box;
     }
-    if (d == "UP") {
+    if (d === "UP") {
         heady -= box;
     }
-    if (d == "DOWN") {
+    if (d === "DOWN") {
         heady += box;
     }
 
     // snake eat the food
-    if (headx == foodPlace.x && heady == foodPlace.y) {
+    if (headx === foodPlace.x && heady === foodPlace.y) {
         foodPlace = {
             x: Math.floor(Math.random() * 17 + 1) * box,
             y: Math.floor(Math.random() * 15 + 3) * box,
@@ -85,7 +88,7 @@ function draw() {
 
     snake.unshift(newHead);
 
-    checkGameover();
+    checkGameOver();
 
     ctx.fillStyle = "white";
     ctx.font = "45px Changa one";
@@ -101,47 +104,47 @@ document.addEventListener("keydown", direction);
 
 function direction(event) {
     // move left
-    if (event.keyCode == 37 && d != "RIGHT") {
+    if (event.keyCode === 37 && d !== "RIGHT") {
         d = "LEFT";
     }
     // move Right
-    if (event.keyCode == 39 && d != "LEFT") {
+    if (event.keyCode === 39 && d !== "LEFT") {
         d = "RIGHT";
     }
     // move Up
-    if (event.keyCode == 38 && d != "DOWN") {
+    if (event.keyCode === 38 && d !== "DOWN") {
         d = "UP";
     }
     // move Down
-    if (event.keyCode == 40 && d != "UP") {
+    if (event.keyCode === 40 && d !== "UP") {
         d = "DOWN";
     }
 }
 
 // ---------------------------------------------------------------------------
-function checkGameover() {
+const checkGameOver = () => {
     let head = snake[0];
     if (
         head.x < box ||
         head.x > 17 * box ||
         head.y < 3 * box ||
         head.y > 17 * box ||
-        collison()
+        Collision()
     ) {
         clearInterval(game);
-        saveHighScore();
+        // saveHighScore();
         ctx.font = "30px sans-serif";
         ctx.fillStyle = "red";
         ctx.fillText("GAME OVER", 6.5 * box, 10 * box);
     }
-}
+};
 
 // ---------------------------------------------------------------------------
-function collison() {
+function Collision() {
     let headx = snake[0].x;
     let heady = snake[0].y;
     for (let i = 1; i < snake.length; i++) {
-        if (headx == snake[i].x && heady == snake[i].y) {
+        if (headx === snake[i].x && heady === snake[i].y) {
             return true;
         }
     }
@@ -154,23 +157,28 @@ start.addEventListener("click", () => {
     game = setInterval(draw, 200 - range.value);
 });
 
-function saveHighScore() {
-    let name = document.getElementById("name-input").value;
-    localStorage.setItem(name, score.toString());
 
-    let list = document.getElementById("score-list");
 
-    let counter = 0;
 
-    for (var key in localStorage) {
-        if (counter >= 5) {
-            break;
-        }
-        if (key != "") {
-            let li = document.createElement("li");
-            li.innerHTML = `<p>${key} : ${localStorage[key]}</p>`;
-            list.appendChild(li);
-            counter++;
-        }
-    }
-}
+// let highScore = [];
+//
+// function saveHighScore() {
+//     let name = document.getElementById("name-input").value;
+//     localStorage.setItem(name, score.toString());
+//
+//     let list = document.getElementById("score-list");
+//
+//     let counter = 0;
+//
+//     for (var key in localStorage) {
+//         if (counter >= 5) {
+//             break;
+//         }
+//         if (key != "") {
+//             let li = document.createElement("li");
+//             li.innerHTML = `<p>${key} : ${localStorage[key]}</p>`;
+//             list.appendChild(li);
+//             counter++;
+//         }
+//     }
+// }
